@@ -1,7 +1,6 @@
 # Heatmap to Grayscale Converter
 
-This program converts a heatmap image into grayscale with customized transformations. It includes features like resizing the image to focus on relevant information and applying thresholds for color transformation.
-
+This program provides a custom solution to convert a heatmap image into grayscale with the specific requirement of representing warm colors with darker shades and cool colors with lighter shades. OpenCV does not inherently provide a function to achieve this color mapping directly. Therefore, this script implements a customized transformation to achieve the desired effect, allowing the user to modify various constants to fine-tune the transformation process.
 ## Requirements
 
 - Python 3.x
@@ -10,6 +9,13 @@ This program converts a heatmap image into grayscale with customized transformat
 - OS
 - Tempfile
 - Subprocess
+
+
+## Background
+
+In standard grayscale conversion, each pixel's intensity is typically derived from a linear combination of its RGB color components. However, this approach does not always produce visually meaningful representations, especially when dealing with heatmap images where different colors represent different data ranges.
+
+To address this limitation, this script customizes the grayscale conversion process. Warm colors (such as red) are mapped to darker shades in the grayscale output, while cool colors (such as blue) are mapped to lighter shades. This transformation enhances the visual contrast in the resulting grayscale image, making it easier to interpret and analyze the heatmap data.
 
 ## Usage
 
@@ -28,4 +34,11 @@ This program converts a heatmap image into grayscale with customized transformat
 - `ZOOM_SIZE`: Size for zooming the image.
 - `WIDE_TRANS`: Width for centering the relevant information.
 - `HEIGH_TRANS`: Height for centering the relevant information.
+
+## Note
+  
+- While OpenCV provides powerful image processing capabilities, custom solutions like this one may be necessary to achieve specific visual effects or data representations.
+- Experiment with different parameter values to find the optimal transformation for your heatmap images.
+
+By offering a customized approach to grayscale conversion, this script enhances the interpretability and visualization of heatmap data, facilitating data analysis and insights extraction.
 
