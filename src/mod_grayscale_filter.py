@@ -41,7 +41,7 @@ def init():
     print("OpenCV version:", cv2.__version__)
 
     current_dir = os.getcwd()
-    path = (str(current_dir) + '/flux_2024-01-22T140613-00Z.png')
+    path = (str(current_dir) + '/data/flux_2024-01-22T140613-00Z.png')
 
     print("Image to process:", path)
     return path
