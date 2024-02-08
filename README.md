@@ -42,3 +42,10 @@ To address this limitation, this script customizes the grayscale conversion proc
 
 By offering a customized approach to grayscale conversion, this script enhances the interpretability and visualization of heatmap data, facilitating data analysis and insights extraction.
 
+## Example
+
+![Imagen 1](/imgs/work_img.png) | ![Imagen 2](/imgs/result.png)
+:-------------------------:|:-------------------------:
+*Preprocessed* | *Processed*
+
+
