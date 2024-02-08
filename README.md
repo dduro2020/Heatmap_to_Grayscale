@@ -30,9 +30,11 @@ To address this limitation, this script customizes the grayscale conversion proc
 - `DECREASERED`: Transformation factor for decreasing white intensity in red.
 - `DECREASEGREEN`: Transformation factor for decreasing white intensity in green.
 - `DECREASEBLUE`: Transformation factor for decreasing white intensity in blue.
+- `DECREASECIAN`: Transformation factor for decreasing white intensity in cian (blue+green).
+
 
 - `INCREASEBLUE`: Transformation factor for increasing white intensity in blue.
-- `DECREASECIAN`: Transformation factor for increasing white intensity in cian (blue+green).
+
   
 - `ZOOM_SIZE`: Size for zooming the image.
 - `WIDE_TRANS`: Width for centering the relevant information.
