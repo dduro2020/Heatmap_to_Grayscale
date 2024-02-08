@@ -5,14 +5,19 @@ import tempfile
 import subprocess
 
 
-GREEN_THRESHOLD = 10
-RED_THRESHOLD = 80
-DECREASE2GREY = 0.1
-INCREASE2GREY = 1 
+
+DECREASERED = 0.05
+DECREASEGREEN = 0.2
+DECREASEBLUE = 0.75
+
+INCREASEBLUE = 1.05
+DECREASECIAN = 0.1 
 
 ZOOM_SIZE = 750
 WIDE_TRANS = 650
 HEIGH_TRANS = 350
+
+PIXELS = 50
 
 # Grayscale on heatmap
 def heatmap_to_grayscale(heatmap):
@@ -20,12 +25,10 @@ def heatmap_to_grayscale(heatmap):
     for i in range(heatmap.shape[0]):
         for j in range(heatmap.shape[1]):
             b, g, r = heatmap[i, j]
-            if g > GREEN_THRESHOLD:
-                gray = DECREASE2GREY * r - DECREASE2GREY * g + INCREASE2GREY * b
-            elif r > RED_THRESHOLD:
-                gray = r*DECREASE2GREY/10
-            else: 
-                gray = DECREASE2GREY * r + DECREASE2GREY*3 * g + INCREASE2GREY * b
+            if b > g:
+                gray = b * INCREASEBLUE - g * DECREASECIAN # smoothe texture
+            else:
+                gray = DECREASERED * r + DECREASEGREEN * g + DECREASEBLUE * b
             grayscale_transformed[i,j] = gray
     
     return grayscale_transformed
@@ -51,7 +54,7 @@ def init():
 img = cv2.imread(init())
 
 zoom_img = resize_img(img)
-resized_zoom = cv2.resize(zoom_img, (50,50))
+resized_zoom = cv2.resize(zoom_img, (PIXELS,PIXELS))
 result = heatmap_to_grayscale(resized_zoom)
 
 cv2.imwrite('imagen_resultante.png', result)
