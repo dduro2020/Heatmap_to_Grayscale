@@ -20,18 +20,29 @@ HEIGH_TRANS = 350
 PIXELS = 50
 
 # Grayscale on heatmap
-def heatmap_to_grayscale(heatmap):
-    grayscale_transformed = np.zeros_like(heatmap, dtype=np.uint8)
-    for i in range(heatmap.shape[0]):
-        for j in range(heatmap.shape[1]):
-            b, g, r = heatmap[i, j]
-            if b > g:
-                gray = b * INCREASEBLUE - g * DECREASECIAN # smoothe texture
-            else:
-                gray = DECREASERED * r + DECREASEGREEN * g + DECREASEBLUE * b
-            grayscale_transformed[i,j] = gray
+def optimize_grayscale_transform(heatmap):
+    # separate color channels
+    b = heatmap[:,:,0]
+    g = heatmap[:,:,1]
+    r = heatmap[:,:,2]
+    
+    # masks for pixels with b > g
+    mask = b > g
+    
+    # blue lighter than green scale
+    gray1 = np.where(mask, b * INCREASEBLUE - g * DECREASECIAN, 0) # smoothe texture
+    
+    # normal grayscale
+    gray2 = DECREASERED * r + DECREASEGREEN * g + DECREASEBLUE * b
+    
+    # Combine both gray values based on the mask
+    grayscale_transformed = gray1 + np.where(mask, 0, gray2)
+    
+    # uint8 range
+    grayscale_transformed = np.clip(grayscale_transformed, 0, 255).astype(np.uint8)
     
     return grayscale_transformed
+
 
 # Center image to process relevant info
 def resize_img(img):
@@ -55,7 +66,7 @@ img = cv2.imread(init())
 
 zoom_img = resize_img(img)
 resized_zoom = cv2.resize(zoom_img, (PIXELS,PIXELS))
-result = heatmap_to_grayscale(resized_zoom)
+result = optimize_grayscale_transform(resized_zoom)
 
 cv2.imwrite('imagen_resultante.png', result)
 subprocess.run(['xdg-open', 'imagen_resultante.png'])
